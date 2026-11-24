@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Children 1 · material del examen</title>
+<style>
+  :root{
+    --tinta:#1d1b19; --suave:#6a655f; --linea:#e2ddd5; --papel:#fbf9f6; --caja:#ffffff;
+    --acento:#8a5a2b; --acento-f:#fdf4e8; --ok:#2f6b4f; --mal:#9b3030;
+    --sombra:0 1px 2px rgba(29,27,25,.05), 0 8px 24px -12px rgba(29,27,25,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --tinta:#ece7e0; --suave:#a49d94; --linea:#36322d; --papel:#17150f; --caja:#201d18;
+      --acento:#d6a76a; --acento-f:#2a2318;
+      --sombra:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--papel); color:var(--tinta);
+    font:16px/1.55 ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .envoltorio{max-width:860px; margin:0 auto; padding:0 16px}
+
+  /* ---------- puerta ---------- */
+  #puerta{min-height:100dvh; display:grid; place-items:center; padding:24px 16px}
+  .llave{width:100%; max-width:420px; text-align:center}
+  .llave h1{font-size:26px; line-height:1.25; margin:0 0 6px; font-weight:600; letter-spacing:-.01em}
+  .llave p{color:var(--suave); margin:0 0 26px; font-size:15px}
+  .campo{display:flex; gap:8px}
+  .campo input{
+    flex:1; min-width:0; padding:13px 15px; font:inherit; font-size:16px; color:var(--tinta);
+    background:var(--caja); border:1px solid var(--linea); border-radius:10px; outline:none;
+  }
+  .campo input:focus{border-color:var(--acento); box-shadow:0 0 0 3px var(--acento-f)}
+  button{
+    font:inherit; cursor:pointer; border-radius:10px; border:1px solid transparent;
+    background:var(--acento); color:#fff; padding:13px 18px; font-weight:600; font-size:15px;
+  }
+  button:hover{filter:brightness(1.08)}
+  button[disabled]{opacity:.55; cursor:default; filter:none}
+  .aviso{min-height:22px; margin-top:12px; font-size:14px; color:var(--mal)}
+  .aviso.trabajando{color:var(--suave)}
+
+  /* ---------- catálogo ---------- */
+  #catalogo{display:none; padding:40px 0 64px}
+  .tapa{border-bottom:1px solid var(--linea); padding-bottom:20px; margin-bottom:28px}
+  .tapa h1{font-size:28px; margin:0 0 4px; font-weight:600; letter-spacing:-.01em}
+  .tapa p{margin:0; color:var(--suave); font-size:15px}
+  h2.grupo{
+    font-size:12px; text-transform:uppercase; letter-spacing:.09em; color:var(--suave);
+    font-weight:600; margin:34px 0 12px; font-family:ui-sans-serif,system-ui,sans-serif;
+  }
+  .ficha{
+    display:block; width:100%; text-align:left; background:var(--caja); color:inherit;
+    border:1px solid var(--linea); border-radius:12px; padding:16px 18px; margin-bottom:10px;
+    cursor:pointer; box-shadow:var(--sombra); transition:border-color .15s, transform .15s;
+    font:inherit;
+  }
+  .ficha:hover{border-color:var(--acento); transform:translateY(-1px)}
+  .ficha .t{font-weight:600; font-size:17px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+  .ficha .et{
+    font-family:ui-sans-serif,system-ui,sans-serif; font-size:11px; font-weight:600; color:var(--acento);
+    background:var(--acento-f); border-radius:5px; padding:2px 7px; letter-spacing:.02em;
+  }
+  .ficha .d{color:var(--suave); font-size:14.5px; margin-top:6px}
+  .barra-audio{display:flex; align-items:center; gap:12px; margin-top:12px; flex-wrap:wrap}
+  .barra-audio audio{height:34px; flex:1; min-width:220px}
+  .pie{margin-top:44px; padding-top:18px; border-top:1px solid var(--linea); color:var(--suave); font-size:13.5px}
+  .pie code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px}
+
+  /* ---------- visor ---------- */
+  #visor{position:fixed; inset:0; background:var(--papel); display:none; flex-direction:column; z-index:50}
+  #visor header{
+    display:flex; align-items:center; gap:12px; padding:9px 14px; border-bottom:1px solid var(--linea);
+    background:var(--caja); font-family:ui-sans-serif,system-ui,sans-serif;
+  }
+  #visor header .n{font-weight:600; font-size:14.5px; flex:1; min-width:0; overflow:hidden;
+    text-overflow:ellipsis; white-space:nowrap}
+  #visor header button{padding:7px 13px; font-size:13.5px}
+  #visor header button.sec{background:transparent; color:var(--tinta); border-color:var(--linea)}
+  #visor iframe{flex:1; width:100%; border:0; background:#fff}
+  @media print{
+    #puerta,#catalogo,#visor header{display:none !important}
+    #visor{position:static; display:block !important}
+    #visor iframe{height:auto}
+  }
+  @media (max-width:560px){
+    .llave h1{font-size:22px} .tapa h1{font-size:23px} .ficha{padding:14px 15px}
+  }
+</style>
+</head>
+<body>
+
+<section id="puerta">
+  <div class="llave">
+    <h1>Children 1 · material del examen</h1>
+    <p>Está cifrado. Escribí la contraseña para verlo.</p>
+    <form class="campo" id="form">
+      <input id="pass" type="password" placeholder="contraseña" autocomplete="current-password"
+             autocapitalize="off" autocorrect="off" spellcheck="false" required>
+      <button id="btn" type="submit">Entrar</button>
+    </form>
+    <div class="aviso" id="aviso"></div>
+  </div>
+</section>
+
+<main id="catalogo"><div class="envoltorio">
+  <div class="tapa">
+    <h1>Children 1 · material del examen</h1>
+    <p id="sub"></p>
+  </div>
+  <div id="listas"></div>
+  <div class="pie" id="pie"></div>
+</div></main>
+
+<section id="visor">
+  <header>
+    <button class="sec" id="volver" type="button">← Volver</button>
+    <span class="n" id="visor-n"></span>
+    <button id="imprimir" type="button">Imprimir / Guardar PDF</button>
+  </header>
+  <iframe id="marco" title="material"></iframe>
+</section>
+
+<script>
+const DATOS = {"salt": "UQw7hhxObdKd8iVLN3yVAQ==", "prueba": "Di+SQKPepJ3eOLdqh+ozp2zrWOILEIz5maWh+2+XpVLiFvnH", "vueltas": 310000, "build": "f0f5c8b1bd13", "sub": "Oxford Idiomas · Final Integrative Practice 2026", "piezas": [{"id": "examen-alumno", "archivo": "d/examen-alumno.bin", "titulo": "Examen · hoja del alumno", "bajada": "6 páginas · 56 ejercicios", "para": "Es lo que se fotocopia y se reparte. Imprimir a doble faz en A4, al 100 % (sin «ajustar a la página»). Son dos cuadernillos: Reading and Use of English (páginas 1 a 3) y Listening and Writing (páginas 4 a 6).", "audios": []}, {"id": "examen-docente", "archivo": "d/examen-docente.bin", "titulo": "Examen · cuadernillo de la docente", "bajada": "Con las respuestas y el porqué de cada ejercicio", "para": "Las respuestas de todo, el guion del listening, la grilla del speaking y, de cada ejercicio, qué mide, de qué página del handout salió y por qué está. Este es el que NO se fotocopia.", "audios": []}, {"id": "examen-aula", "archivo": "d/examen-aula.bin", "titulo": "Examen · para tomarlo desde la computadora", "bajada": "Con el audio y la guía al costado", "para": "El mismo examen con la guía del ejercicio al costado y el audio del listening con play y pausa por parte, para repetir las veces que haga falta. Pensado para tener abierto mientras se toma.", "audios": ["L1", "L2", "listening-completo"]}, {"id": "practica-alumno", "archivo": "d/practica-alumno.bin", "titulo": "Práctica · hoja del alumno", "bajada": "2 páginas · 19 ejercicios", "para": "Para practicar antes del examen. Mismos tipos de ejercicio que el cuadernillo 1, con otra lámina y sin repetir ni un ejercicio del examen.", "audios": []}, {"id": "practica-docente", "archivo": "d/practica-docente.bin", "titulo": "Práctica · cuadernillo de la docente", "bajada": "Con las respuestas", "para": "Las respuestas de la práctica y de dónde sale cada ejercicio.", "audios": []}], "audios": [{"id": "audio-l1", "nombre": "L1", "archivo": "d/audio-l1.bin", "titulo": "Listening a) · Listen and number", "para": "Se pasa dos veces."}, {"id": "audio-l2", "nombre": "L2", "archivo": "d/audio-l2.bin", "titulo": "Listening b) · Listen and circle", "para": "Se pasa dos veces."}, {"id": "audio-todo", "nombre": "listening-completo", "archivo": "d/audio-todo.bin", "titulo": "Listening completo", "para": "Las dos partes seguidas, con sus pausas."}], "extras": [{"archivo": "d/planilla.bin", "nombre": "planilla-notas-ch1.xlsx", "titulo": "Bajar la planilla de notas (Excel)"}]};
+const $ = s => document.querySelector(s);
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+
+let CLAVE = null;
+const cache = new Map();
+const blobsAudio = new Map();
+
+async function derivar(pass, salt){
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey(
+    {name:"PBKDF2", salt, iterations:DATOS.vueltas, hash:"SHA-256"},
+    base, {name:"AES-GCM", length:256}, false, ["decrypt"]);
+}
+
+async function abrirCaja(bytes){
+  const iv = bytes.slice(0,12), cuerpo = bytes.slice(12);
+  return new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM", iv}, CLAVE, cuerpo));
+}
+
+async function traer(archivo){
+  if (cache.has(archivo)) return cache.get(archivo);
+  // El ?v= es imprescindible, no un adorno: los .bin cambian ENTEROS cada vez que se regenera el
+  // sitio (otro IV, y otra clave si cambió la contraseña), pero conservan nombre y tamaño. Sin la
+  // versión en la URL, un navegador que ya visitó el sitio sirve los bloques viejos desde su caché
+  // y no abre nada, con la contraseña correcta puesta.
+  const r = await fetch(archivo + "?v=" + DATOS.build, {cache:"force-cache"});
+  if (!r.ok) throw new Error("no se pudo bajar " + archivo);
+  const d = await abrirCaja(new Uint8Array(await r.arrayBuffer()));
+  cache.set(archivo, d);
+  return d;
+}
+
+/* ------------------------------------------------------------------ entrar */
+$("#form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const pass = $("#pass").value;
+  if (!pass) return;
+  const aviso = $("#aviso"), btn = $("#btn");
+  btn.disabled = true;
+  aviso.className = "aviso trabajando";
+  aviso.textContent = "Abriendo…";
+  await new Promise(r => setTimeout(r, 30));
+  try{
+    CLAVE = await derivar(pass, b64(DATOS.salt));
+    await abrirCaja(b64(DATOS.prueba));          // si la contraseña no es, esto falla
+  }catch(_){
+    CLAVE = null;
+    aviso.className = "aviso";
+    aviso.textContent = "Esa no es la contraseña.";
+    btn.disabled = false;
+    $("#pass").select();
+    return;
+  }
+  try{ sessionStorage.setItem("ch1", pass); }catch(_){}
+  aviso.textContent = "";
+  $("#puerta").style.display = "none";
+  $("#catalogo").style.display = "block";
+  pintar();
+});
+
+/* ------------------------------------------------------------------ catálogo */
+function pintar(){
+  $("#sub").textContent = DATOS.sub;
+  const cont = $("#listas");
+
+  const gDoc = document.createElement("div");
+  gDoc.innerHTML = '<h2 class="grupo">Para imprimir y para corregir</h2>';
+  DATOS.piezas.forEach(p => {
+    const b = document.createElement("button");
+    b.className = "ficha"; b.type = "button";
+    b.innerHTML = `<div class="t">${p.titulo} <span class="et">${p.bajada}</span></div>
+                   <div class="d">${p.para}</div>`;
+    b.addEventListener("click", () => ver(p));
+    gDoc.appendChild(b);
+  });
+  cont.appendChild(gDoc);
+
+  if (DATOS.audios.length){
+    const gAud = document.createElement("div");
+    gAud.innerHTML = '<h2 class="grupo">Audio del listening</h2>';
+    DATOS.audios.forEach(a => {
+      const d = document.createElement("div");
+      d.className = "ficha"; d.style.cursor = "default";
+      d.innerHTML = `<div class="t">${a.titulo}</div><div class="d">${a.para}</div>
+        <div class="barra-audio"><button type="button">Cargar</button></div>`;
+      const barra = d.querySelector(".barra-audio"), btn = barra.querySelector("button");
+      btn.addEventListener("click", async () => {
+        btn.disabled = true; btn.textContent = "Descifrando…";
+        try{
+          const url = await audioURL(a);
+          const au = document.createElement("audio");
+          au.controls = true; au.preload = "metadata"; au.src = url;
+          barra.replaceChildren(au); au.play().catch(()=>{});
+        }catch(err){ btn.disabled = false; btn.textContent = "No se pudo. Reintentar"; }
+      });
+      gAud.appendChild(d);
+    });
+    cont.appendChild(gAud);
+  }
+
+  const extras = DATOS.extras.map(x =>
+    `<a href="#" data-baja="${x.archivo}" data-nombre="${x.nombre}">${x.titulo}</a>`).join(" · ");
+  $("#pie").innerHTML =
+    (extras ? extras + "<br><br>" : "") +
+    "Todo esto está cifrado en el servidor: sin la contraseña no se puede leer, y los buscadores " +
+    "no lo indexan. Para imprimir, abrí la pieza y usá <b>Imprimir → Guardar como PDF</b>, " +
+    "en A4 y al 100 %.";
+
+  $("#pie").querySelectorAll("[data-baja]").forEach(a => {
+    a.addEventListener("click", async e => {
+      e.preventDefault();
+      const txt = a.textContent; a.textContent = "descifrando…";
+      try{
+        const d = await traer(a.dataset.baja);
+        const url = URL.createObjectURL(new Blob([d]));
+        const t = document.createElement("a");
+        t.href = url; t.download = a.dataset.nombre; t.click();
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+      }catch(_){}
+      a.textContent = txt;
+    });
+  });
+}
+
+async function audioURL(a){
+  if (blobsAudio.has(a.id)) return blobsAudio.get(a.id);
+  const d = await traer(a.archivo);
+  const url = URL.createObjectURL(new Blob([d], {type:"audio/mpeg"}));
+  blobsAudio.set(a.id, url);
+  return url;
+}
+
+/* ------------------------------------------------------------------ visor */
+let urlAbierta = null;
+function soltar(){
+  if (urlAbierta){ URL.revokeObjectURL(urlAbierta); urlAbierta = null; }
+}
+
+async function ver(p){
+  $("#visor-n").textContent = p.titulo;
+  $("#visor").style.display = "flex";
+  const marco = $("#marco");
+  marco.removeAttribute("src");
+  marco.srcdoc = '<p style="font:15px ui-sans-serif,system-ui;color:#777;padding:32px">Descifrando…</p>';
+  let html;
+  try{
+    html = new TextDecoder().decode(await traer(p.archivo));
+  }catch(err){
+    marco.srcdoc = '<p style="font:15px ui-sans-serif,system-ui;color:#933;padding:32px">No se pudo abrir.</p>';
+    return;
+  }
+  // los MP3 van cifrados aparte: se enganchan recién acá
+  if (p.audios && p.audios.length){
+    for (const nombre of p.audios){
+      const a = DATOS.audios.find(x => x.nombre === nombre);
+      if (!a) continue;
+      try{
+        const url = await audioURL(a);
+        html = html.replaceAll(`src="" data-audio="${nombre}"`, `src="${url}"`);
+      }catch(_){}
+    }
+  }
+  // Blob y no srcdoc: estas piezas llevan los dibujos adentro y pesan varios MB, y un srcdoc de ese
+  // tamaño tarda muchísimo. El blob hereda el origen de esta página, así que imprimir sigue andando.
+  soltar();
+  urlAbierta = URL.createObjectURL(new Blob([html], {type:"text/html;charset=utf-8"}));
+  marco.removeAttribute("srcdoc");
+  marco.src = urlAbierta;
+}
+
+$("#volver").addEventListener("click", () => {
+  $("#visor").style.display = "none";
+  $("#marco").removeAttribute("src");
+  $("#marco").srcdoc = "";
+  soltar();
+});
+$("#imprimir").addEventListener("click", () => {
+  const w = $("#marco").contentWindow;
+  if (w){ w.focus(); w.print(); }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && $("#visor").style.display === "flex") $("#volver").click();
+});
+
+/* vuelve sin volver a pedir la contraseña mientras no se cierre la pestaña */
+try{
+  const g = sessionStorage.getItem("ch1");
+  if (g){ $("#pass").value = g; $("#form").requestSubmit(); }
+}catch(_){}
+</script>
+</body>
+</html>
